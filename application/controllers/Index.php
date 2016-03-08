@@ -43,4 +43,15 @@ class IndexController extends Yaf_Controller_Abstract {
 		return FALSE;
 	}
 
+	public function eventAction() {
+		$emitter = new Evenement\EventEmitter();
+		$emitter->on('log', function () {
+			file_put_contents('/tmp/test.log', time() . PHP_EOL);
+		});
+		$emitter->emit('log');
+
+		echo "ok\n";
+		return false;
+	}
+
 }
