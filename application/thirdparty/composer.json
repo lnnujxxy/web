@@ -1,0 +1,6 @@
+{
+    "require": {
+        "endroid/qrcode": "^1.5",
+        "evenement/evenement": "2.0.*"
+    }
+}
