@@ -23,7 +23,7 @@ class IndexController extends Yaf_Controller_Abstract {
 
 	public function helloAction() {
 		Yaf_Dispatcher::getInstance()->disableView();
-		$response = json_encode("json");
+		$response = json_encode("json2");
 		$this->getResponse()->setBody($response, 'content');
 	}
 

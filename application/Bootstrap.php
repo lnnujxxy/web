@@ -69,6 +69,16 @@ class Bootstrap extends Yaf_Bootstrap_Abstract {
 		//在这里注册自己的view控制器，例如smarty,firekylin
 	}
 
+	public function _initError(Yaf_Dispatcher $dispatcher) {
+		//记录错误日志
+		register_shutdown_function(function () {
+			$error = error_get_last();
+			if ($error['type'] != E_NOTICE) {
+				error_log(json_encode($error));
+			}
+		});
+	}
+
 	/**
 	 * @param Dispatcher $dispatcher
 	 */

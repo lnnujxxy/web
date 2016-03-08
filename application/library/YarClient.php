@@ -43,12 +43,8 @@ class YarClient {
 	}
 
 	public function __call($method, $parameters = array()) {
-		$params = array_merge((array) $this->_parameters, (array) $parameters[0]);
-		$result = call_user_func(array($this->_client, $method), $this->_module, $this->_controller, $this->_action, $params);
-
-		if (!$result) {
-			return null;
-		}
+		$params = array_merge((array) $this->_parameters, (array) $parameters);
+		call_user_func(array($this->_client, $method), $this->_module, $this->_controller, $this->_action, $params);
 	}
 
 	public function setModule($module) {
