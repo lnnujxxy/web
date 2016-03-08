@@ -14,14 +14,6 @@ class Bootstrap extends Yaf_Bootstrap_Abstract {
 
 		$this->loadConfigEnv($_SERVER['env']);
 
-		if ($_SERVER['OSS_ID']) {
-			$configs['application']['oss']['accessid'] = $_SERVER['OSS_ID'];
-		}
-
-		if ($_SERVER['OSS_KEY']) {
-			$configs['application']['oss']['accesskey'] = $_SERVER['OSS_KEY'];
-		}
-
 		if ($_SERVER['DB_HOST']) {
 			$configs['db'][0]['host'] = $_SERVER['DB_HOST'];
 		}

@@ -14,7 +14,7 @@ class YarClient {
 
 	public function __construct($mvc = array(), $params = array(), $url = '', $opt = array()) {
 		if (!$url) {
-			$url = Yaf_Registry::get('config')['backend_url']['backend_url'];
+			$url = Yaf_Registry::get('config')['application']['yar_api'];
 		}
 
 		$this->_client = new Yar_Client($url);

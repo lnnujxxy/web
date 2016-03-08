@@ -13,11 +13,9 @@ class RpcClientController extends Yaf_Controller_Abstract {
 				'controller' => 'index',
 				'action' => 'hello',
 			),
-			array('yaf'),
-			'http://web.dev.shiyuehehu.com/'
+			array('yaf')
 		);
 		$data = $client->api();
-
 		return false;
 	}
 }

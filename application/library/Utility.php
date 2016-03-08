@@ -348,4 +348,24 @@ class Utility {
 		return $buff;
 	}
 
+	/**
+	 * 生成签名
+	 * @return 签名，本函数不覆盖sign成员变量
+	 */
+	public static function makeSign($values, $key = '123!@#') {
+		//签名步骤一：按字典序排序参数
+		ksort($values);
+		$string = self::toUrlParams($values);
+		//签名步骤二：在string后加入KEY
+		$string = $string . "&key=" . $key;
+		//签名步骤三：MD5加密
+		$string = md5($string);
+		//签名步骤四：所有字符转为大写
+		$result = strtolower($string);
+		return $result;
+	}
+
+	public static function checkSign($values, $sign) {
+		return self::makeSign($values) == $sign;
+	}
 }

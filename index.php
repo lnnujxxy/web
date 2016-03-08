@@ -7,32 +7,14 @@
  */
 const APPLICATION_PATH = __DIR__;
 
-if ($_SERVER['env'] === 'dev') {
-	$env = 'dev';
-} elseif ($_SERVER['env'] === 'test') {
-	$env = 'test';
-} elseif ($_SERVER['env'] === 'stage') {
-	$env = 'stage';
-} else {
-	$env = 'product';
-}
-
-//记录错误日志
-register_shutdown_function(function () {
-	$error = error_get_last();
-	if ($error['type'] != E_NOTICE) {
-		error_log(json_encode($error));
-	}
-});
-// var_dump($_SERVER['HTTP_USER_AGENT']);
 if (isset($_SERVER['HTTP_USER_AGENT']) && substr($_SERVER['HTTP_USER_AGENT'], 0, 11) === 'PHP Yar Rpc') {
-	/*
-		     * Yar_Server导出的API类
-		     *
-		     * 当请求通过Yar_Client进行远程调用时生效
-		     *
-		     * @package Global
-	*/
+	/**
+	 * Yar_Server导出的API类
+	 *
+	 * 当请求通过Yar_Client进行远程调用时生效
+	 *
+	 * @package Global
+	 */
 	class Service {
 		/**
 		 * 导出API的api方法
@@ -45,7 +27,7 @@ if (isset($_SERVER['HTTP_USER_AGENT']) && substr($_SERVER['HTTP_USER_AGENT'], 0,
 		 * @return string API调用的响应正文
 		 */
 		public function api($module, $controller, $action, $parameters) {
-			$application = new Yaf_Application(APPLICATION_PATH . "/conf/dev/application.ini", 'common');
+			$application = new Yaf_Application(ini(), 'common');
 			$request = new Yaf_Request_Simple('API', $module, $controller, $action, $parameters);
 			$response = $application->bootstrap()->getDispatcher()->dispatch($request);
 			return $response->getBody();
@@ -56,6 +38,19 @@ if (isset($_SERVER['HTTP_USER_AGENT']) && substr($_SERVER['HTTP_USER_AGENT'], 0,
 	// var_dump($server);exit;
 	$server->handle();
 } else {
-	$application = new Yaf_Application(APPLICATION_PATH . "/conf/{$env}/application.ini", 'common');
+	$application = new Yaf_Application(ini(), 'common');
 	$application->bootstrap()->run();
+}
+
+function ini() {
+	if ($_SERVER['env'] === 'dev') {
+		$env = 'dev';
+	} elseif ($_SERVER['env'] === 'test') {
+		$env = 'test';
+	} elseif ($_SERVER['env'] === 'stage') {
+		$env = 'stage';
+	} else {
+		$env = 'product';
+	}
+	return APPLICATION_PATH . "/conf/{$env}/application.ini";
 }
